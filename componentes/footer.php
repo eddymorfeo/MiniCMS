@@ -17,10 +17,7 @@
                         </div>
                         <div class="row">
                             <a href="quienessomos.php">Quienes Somos</a>
-                        </div>
-                        <div class="row">
-                            <a href="login.php">Login</a>
-                        </div>
+                        </div>                        
                     </div>
                 </div>
                 <div class="col-lg-4 col-md-12 mb-4 mb-md-0">

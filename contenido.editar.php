@@ -9,19 +9,19 @@ if (isset($_GET["id"])) {
     $contenido->setIdContenido($_GET["id"]);
 }
 if (!empty($_POST)) {
-    $contenido->idContenido = $_POST["idContenido"];
-    $contenido->idClasificacion = $_POST["idClasificacion"];
-    $contenido->autor_idUsuario = $_POST["autor_idUsuario"];
+    $contenido->idcontenido = $_POST["idcontenido"];
+    $contenido->idclasificacion = $_POST["idclasificacion"];
+    //$contenido->autor_idusuario = $_POST["autor_idusuario"];
     $contenido->imagen = $_POST["imagen"];
     $contenido->titulo = $_POST["titulo"];
     $contenido->subtitulo = $_POST["subtitulo"];
     $contenido->contenido = $_POST["contenido"];
-    if ($_POST["idContenido"] == 0) {
+    if ($_POST["idcontenido"] == 0) {
         $contenido->agregar();
     } else {
         $contenido->modificar();
     }
-    header("Location: contenidos.php");
+    header("Location: listar.php");
 }
 
 ?>
@@ -42,10 +42,10 @@ if (!empty($_POST)) {
     <div class="container mt-6">
 
         <form method="post">
-            <input type="hidden" name="idContenido" value="<?php echo $contenido->idContenido ?>">
-            <label class="mt-1" for="idClasificacion">Clasificacion</label>
+            <input type="hidden" name="idcontenido" value="<?php echo $contenido->idcontenido ?>">
+            <label class="mt-1" for="idclasificacion">Clasificacion</label>
             <div class="form-floating mb-2 mt-3">                
-                <select name="idClasificacion" id="idClasificacion">
+                <select name="idclasificacion" id="idclasificacion">
                     <option value="1">Noticias</option> 
                     <option value="2">Asociación</option>
                     <option value="3">Información</option>

@@ -35,9 +35,9 @@ require "./componentes/nav.php";
                         </h2>
                         <div class="card-text"><?php echo $reg["subtitulo"] ?></div>
                         <div class="card-text"><?php echo $reg["contenido"] ?></div>
-                        <a href="contenido.editar.php?id=<?php echo $reg["idContenido"] ?>"
+                        <a href="contenido.editar.php?id=<?php echo $reg["idcontenido"] ?>"
                             class="btn btn-primary">Editar</a>
-                        <a href="contenido.eliminar.php?id=<?php echo $reg["idContenido"] ?>"
+                        <a href="contenido.eliminar.php?id=<?php echo $reg["idcontenido"] ?>"
                             class="btn btn-primary">Eliminar</a>
                     </div>
                 </div>

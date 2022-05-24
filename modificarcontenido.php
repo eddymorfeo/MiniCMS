@@ -19,9 +19,9 @@ $contenido = new Contenido();
 
 $registros = $contenido->listar();
 while ($reg = $registros->fetch_assoc()){
-    echo "idContenido: " . $reg["idContenido"] . "<br>";
-    echo "idClasificacion: " . $reg["idClasificacion"] . "<br>";
-    echo "autor_idUsuario: " . $reg["autor_idUsuario"] . "<br>";
+    echo "idcontenido: " . $reg["idcontenido"] . "<br>";
+    echo "idclasificacion: " . $reg["idclasificacion"] . "<br>";
+    echo "autor_idusuario: " . $reg["autor_idusuario"] . "<br>";
     echo "imagen: " . $reg["imagen"] . "<br>";
     echo "titulo: " . $reg["titulo"] . "<br>";
     echo "subtitulo: " . $reg["subtitulo"] . "<br>";
