@@ -1,0 +1,55 @@
+
+CREATE DATABASE `cms`;
+USE `cms`;
+
+CREATE TABLE `usuarios` (
+  `idusuario` smallint(6) NOT NULL AUTO_INCREMENT,
+  `email` varchar(100) NOT NULL,
+  `nombre` varchar(20) NOT NULL,
+  `apellido` varchar(20) NOT NULL,
+  `contrasena` varchar(150) NOT NULL,
+  `activo` tinyint(4) NOT NULL,
+  PRIMARY KEY (`idusuario`)
+  );
+
+INSERT INTO `usuarios` (`idusuario`, `email`, `nombre`, `apellido`, `contrasena`, `activo`) VALUES
+	(1, 'user1@correo.cl', 'User1', 'Ape1', PASSWORD('123'), 1),
+	(2, 'user2@correo.cl', 'User2', 'Ape2', PASSWORD('456'), 1);
+	
+	
+CREATE TABLE  `clasificaciones` (
+`idclasificacion` tinyint(4) NOT NULL AUTO_INCREMENT,
+`nombre` varchar(50) NOT NULL,
+  PRIMARY KEY (`idclasificacion`)
+);
+
+INSERT INTO `clasificaciones` (`idclasificacion`, `nombre`) VALUES
+	(1, 'Noticias'),
+	(2, 'Asociación'),
+	(3, 'Información'),
+	(4, 'Otros');
+	
+	
+	
+CREATE TABLE `contenidos` (
+  `idcontenido` mediumint(9) NOT NULL AUTO_INCREMENT,
+  `idclasificacion` tinyint(4) NOT NULL,
+  `autor_idusuario` smallint(6) NOT NULL,
+  `imagen` varchar(255) NOT NULL,
+  `titulo` varchar(200) NOT NULL,
+  `subtitulo` mediumtext NOT NULL,
+  `contenido` text NOT NULL,
+  PRIMARY KEY (`idcontenido`) USING BTREE,
+  KEY `idClasificacion` (`idclasificacion`) USING BTREE,
+  KEY `autor_idUsuario` (`autor_idusuario`) USING BTREE,
+  CONSTRAINT `contenidos_ibfk_1` FOREIGN KEY (`idClasificacion`) REFERENCES `clasificaciones` (`idClasificacion`),
+  CONSTRAINT `contenidos_ibfk_2` FOREIGN KEY (`autor_idUsuario`) REFERENCES `usuarios` (`idUsuario`)
+);
+
+
+INSERT INTO `contenidos` (`idcontenido`, `idclasificacion`, `autor_idusuario`, `imagen`, `titulo`, `subtitulo`, `contenido`) VALUES
+	(1, 1, 1, 'https://picsum.photos/220/100?abc', 'Título 1', 'Subtítulo 1', 'Contenido 1'),
+	(2, 1, 2, 'https://picsum.photos/220/100?123', 'Título 2', 'Subtítulo 2', 'Contenido 2'),
+	(3, 1, 2, 'https://picsum.photos/220/100?456', 'Título 3', 'Subtítulo 3', 'Contenido 3'),
+	(4, 1, 1, 'https://picsum.photos/220/100?789', 'Título 4', 'Subtítulo 4', 'Contenido 4'),
+	(5, 1, 1, 'https://picsum.photos/220/100?159', 'Título 5', 'Subtítulo 5', 'Contenido 5');

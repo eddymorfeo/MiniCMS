@@ -1,14 +1,12 @@
 <?php
-require_once "./clases/conexion.php";
-?>
-<?php
+require_once ("./clases/conexion.php");
+require_once ("./clases/usuarios.php");
+
 
 $db = new conexionDB();
 
-require "./componentes/nav.php";
-?>
+require_once ("./componentes/nav.php");
 
-<?php
     session_start();
     if (isset($_SESSION['usuario'])) {
         if ($_GET["logout"] == 1) {
@@ -25,22 +23,34 @@ require "./componentes/nav.php";
     $usuarioNoValido = null;
 
     if (!empty($_POST)) {
-        $usuario = $_POST['usuario'];
-        $contrasena = $_POST['contrasena'];
+        $username = $_POST['usuario'];
+        $password = $_POST['contrasena'];
 
-        if ($usuario == 'admin@admin.cl' && $contrasena == '123') {
-            $usuarioValido = "Usuario válido";
-            $_SESSION["usuario"] = $usuario;
+        $usuario = new Usuario();
+        $usuarioValido = $usuario->autenticar($username, $password);
+        if($usuarioValido){
+            $_SESSION['usuario'] = $usuario;
             header("Location: listar.php");
-        } else {
-            $usuarioNoValido = "Usuario no válido";
+            exit();
+        }else{
+            $usuarioNoValido = "Usuario o contraseña incorrecta";            
         }
+
+        //AUTENTICACIÓN EN DURO
+        // if ($usuario == 'admin@admin.cl' && $contrasena == '123') {
+        //     $usuarioValido = "Usuario válido";
+        //     $_SESSION["usuario"] = $usuario;
+        //     // $consulta = "SELECT*FROM usuarios WHERE  usuario = '$usuario' AND contrasena = '$contrasena'";
+        //     header("Location: listar.php");
+        // } else {
+        //     $usuarioNoValido = "Usuario no válido";
+        // }
     }
 
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
     <meta charset="UTF-8">
@@ -61,6 +71,7 @@ require "./componentes/nav.php";
             <div class="col-lg-4 col-md-8 col-sm-8">
                 <div class="card shadow">
                     <div class="card-title text-center border-bottom">
+                        <img src="../img/img_login.jpg" alt="Imagen Login">
                         <h2 class="p-3">Login</h2>
                     </div>
                     <div class="card-body">
@@ -68,13 +79,13 @@ require "./componentes/nav.php";
                             <div class="mb-4">
                                 <label for="usuario" class="form-label">Usuario</label>
                                 <input type="email" class="form-control" maxlength="100" required id="usuario"
-                                    name="usuario" placeholder="name@example.com">
+                                 name="usuario" placeholder="name@example.com">
                             </div>
                             <div class="mb-4">
                                 <label for="contrasena" class="form-label">Contraseña</label>
                                 <input type="password" class="form-control" maxlength="15" required id="contrasena"
                                     name="contrasena" placeholder="123">
-                            </div>
+                            </div>                            
                             <div class="d-grid gap-2 col-6 mx-auto">
                                 <button class="btn btn-primary" type="submit">Ingresar</button>
                             </div>

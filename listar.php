@@ -1,15 +1,62 @@
 <?php
 require './clases/conexion.php';
-require "./componentes/nav.php";
+require './clases/usuarios.php';
+
+session_start();
+
+if (!isset($_SESSION['usuario'])) {
+    header("Location: login.php");
+    exit();
+}
+
+if(isset($_GET['del'])) {
+    $id=$_GET['del'];
+    $query = mysqli_query($mysqli, "DELETE FROM contenidos WHERE id='$id'");
+    header("Location:listar.php");
+}
+
 ?>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="../css/style.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous">
+    </script>
+    <title>INDEX</title>
+</head>
+
+<body>
+<header class="header">
+    <div class="container">
+                <div class="barra">
+            <img src="../img/logo.png" alt="Logo CMS">
+            <div class="mobile-menu">
+                <img class="responsive" src="../img/barras.svg" alt="Menu">
+            </div>
+                
+            <nav class="navegacion">
+                <a class="link" href="index.php"><img src="./img/home.svg"> Inicio</a>
+                <a class="link" href="quienessomos.php"><img src="./img/somos.svg">Quienes Somos</a>
+                <a class="link" href="contenidos.php"><img src="./img/contenido.svg">Contenidos</a>
+                <a class="link" href="logout.php"><img src="./img/log-out.svg">Desconectar</a>
+                
+            </nav>
+            </div>
+        </div>
+        </div>
+</header>
+
 
 <div class="mt-3">
     <a href="contenido.editar.php?id=0" class="btn btn-primary">Agregar nueva publicación</a>
 </div>
 
-<div>
-    <a href="logout.php">Desconectar</a>
-</div>
 
 <div class="row">
 
@@ -38,7 +85,8 @@ require "./componentes/nav.php";
                         <a href="contenido.editar.php?id=<?php echo $reg["idcontenido"] ?>"
                             class="btn btn-primary">Editar</a>
                         <a href="contenido.eliminar.php?id=<?php echo $reg["idcontenido"] ?>"
-                            class="btn btn-primary">Eliminar</a>
+                            class="btn btn-primary" onclick="preguntar">Eliminar</a>
+                                                      
                     </div>
                 </div>
             </div>
@@ -48,6 +96,21 @@ require "./componentes/nav.php";
     <?php
             }
             ?>
+</div>
     <?php
-require "./componentes/footer.php";
+require_once ("./componentes/footer.php");
 ?>
+
+<script type="text/javascript">
+    function preguntar(id) {
+        if(confirm('¿Seguro que desea eliminar el registro?')) {
+            window.location.href = "contenido.eliminar.php?del="+id;
+        }
+    }
+
+
+
+
+</script>
+</body>
+</html>

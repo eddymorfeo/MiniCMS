@@ -18,14 +18,14 @@ class Contenido {
     public function listar(){
         $db = new ConexionDB ();
         $query = "SELECT * FROM contenidos";
-        $resultado =  $db->pdo($query, []); 
+        $resultado =  $db->ejecutar_pdo($query, []); 
         return $resultado;
     }
 
     public function listar2(){
         $db = new ConexionDB ();
         $query = "SELECT * FROM contenidos ORDER BY idcontenido DESC LIMIT 5";
-        $resultado =  $db->pdo($query, []); 
+        $resultado =  $db->ejecutar_pdo($query, []); 
         return $resultado;
     }
 
@@ -33,14 +33,14 @@ class Contenido {
         $db = new ConexionDB ();
         $query = "INSERT INTO contenidos VALUES (NULL, ?, ?, ?, ?, ?, ?)";
         $parametros = [$this->idClasificacion, $this->autor_idUsuario, $this->imagen, $this->titulo, $this->subtitulo, $this->contenido];
-        $db->pdo($query, $parametros); 
+        $db->ejecutar_pdo($query, $parametros); 
         $db->cerrar(); 
     }
     public function modificar (){
         $db = new ConexionDB ();
         $query = "UPDATE contenidos SET idclasificacion = ?, autor_idusuario = ?, imagen = ?, titulo = ?, subtitulo = ?, contenido = ? WHERE idContenido = ?";
         $parametros = [$this->idClasificacion, $this->autor_idUsuario, $this->imagen, $this->titulo, $this->subtitulo, $this->contenido, $this->idContenido];
-        $db->pdo($query, $parametros); 
+        $db->ejecutar_pdo($query, $parametros); 
         $db->cerrar(); 
     }
 
@@ -53,7 +53,7 @@ class Contenido {
     public function obtener(){
         $db = new ConexionDB ();
         $query = "SELECT * FROM contenidos WHERE idcontenido = ?";
-        $resultado =  $db->pdo($query, [$this->idContenido]); 
+        $resultado =  $db->ejecutar_pdo($query, [$this->idContenido]); 
         if ($resultado->num_rows > 0){
             $fila = $resultado ->fetch_assoc();
             $this->idClasificacion = $fila["idclasificacion"];
@@ -76,7 +76,7 @@ class Contenido {
     public function eliminar ($id){
         $db = new ConexionDB ();
         $query = "DELETE FROM contenidos WHERE idcontenido = ?";
-        $db->pdo($query, [$id]);
+        $db->ejecutar_pdo($query, [$id]);
         $db->cerrar(); 
     }
 }
