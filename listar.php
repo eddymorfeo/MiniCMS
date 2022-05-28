@@ -2,7 +2,6 @@
 require './clases/conexion.php';
 require './clases/usuarios.php';
 
-
 session_start();
 
 if (!isset($_SESSION['usuario'])) {
@@ -24,6 +23,18 @@ if (!isset($_SESSION['usuario'])) {
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous">
     </script>
+    <script>
+    function ConfirmDemo() {
+        //Ingresamos un mensaje
+        var mensaje = confirm("¿Realmente desea eliminar el contenido?");
+        //Verificamos si el usuario acepto el mensaje
+        if (!mensaje) {
+            alert("¡Haz denegado el mensaje!");
+            document.getElementById("eliminar").setAttribute("href", "nada");
+            consol.log(document.getElementById("eliminar"));
+        }
+    }
+    </script>
     <title>INDEX</title>
 </head>
 
@@ -41,7 +52,6 @@ if (!isset($_SESSION['usuario'])) {
                     <a class="link" href="quienessomos.php"><img src="./img/somos.svg">Quienes Somos</a>
                     <a class="link" href="contenidos.php"><img src="./img/contenido.svg">Contenidos</a>
                     <a class="link" href="logout.php"><img src="./img/log-out.svg">Desconectar</a>
-
                 </nav>
             </div>
         </div>
@@ -64,7 +74,16 @@ if (!isset($_SESSION['usuario'])) {
         while ($reg = $registros->fetch_assoc()){
 		
         ?>
+        <script>
+        function eliminarContenido(idcontenido) {
 
+            if (confirm("¿Realmente desea eliminar este contenido? ")) {
+
+                window.location = "contenido.eliminar.php?id=" + idcontenido;
+
+            }
+        }
+        </script>
         <div class="col-md-4 mt-3">
             <div class="card">
                 <div class="card-body">
@@ -73,14 +92,14 @@ if (!isset($_SESSION['usuario'])) {
                             <img src="<?php echo $reg["imagen"] ?>" class="img-fluid rounded-start w-100" />
                         </div>
                         <div class="col">
-                            <h2 class="fw-bold">
+                            <h2>
                                 <?php echo $reg["titulo"] ?>
                             </h2>
-                            <div class="card-text fw-bolder"><?php echo $reg["subtitulo"] ?></div>
+                            <div class="card-text"><?php echo $reg["subtitulo"] ?></div>
                             <a href="contenido.editar.php?id=<?php echo $reg["idcontenido"] ?>"
-                                class="btn btn-primary">Editar</a>
-                            <a href="contenido.eliminar.php?id=<?php echo $reg["idcontenido"] ?>"
-                                class="btn btn-primary" onclick="preguntar">Eliminar</a>
+                                class="btn btn-primary">Modificar</a>
+                            <button type="button" onclick="eliminarContenido(<?php echo $reg['idcontenido'] ?>);"
+                                class="btn btn-primary">Elimnar</button>
                         </div>
                     </div>
                 </div>
@@ -96,20 +115,12 @@ require_once ("./componentes/footer.php");
 ?>
 
     <script type="text/javascript">
-    function ConfirmarEliminacion() {
-
-        let elimina = document.getElementById(idDelete);
-        var respuesta = confirm("¿Esta seguro que desea eliminar el contenido?");
-        var paginaEliminar = "contenido.eliminar.php?id=" + elimina;
-        if (respuesta) {
-            window.location.href = "contenido.eliminar.php?id=" + elimina;
-
-        } else {
-            confirm("No se hará nada");
+    function preguntar(id) {
+        if (confirm('¿Seguro que desea eliminar el registro?')) {
+            window.location.href = "contenido.eliminar.php?del=" + id;
         }
     }
     </script>
-
 </body>
 
 </html>
