@@ -15,6 +15,7 @@ require_once ("./componentes/nav.php");
             header("Location: index.php");
             exit();
         }
+        
     }
 
     $usuario = null;
@@ -35,16 +36,6 @@ require_once ("./componentes/nav.php");
         }else{
             $usuarioNoValido = "Usuario o contraseña incorrecta";            
         }
-
-        //AUTENTICACIÓN EN DURO
-        // if ($usuario == 'admin@admin.cl' && $contrasena == '123') {
-        //     $usuarioValido = "Usuario válido";
-        //     $_SESSION["usuario"] = $usuario;
-        //     // $consulta = "SELECT*FROM usuarios WHERE  usuario = '$usuario' AND contrasena = '$contrasena'";
-        //     header("Location: listar.php");
-        // } else {
-        //     $usuarioNoValido = "Usuario no válido";
-        // }
     }
 
 ?>
@@ -71,7 +62,7 @@ require_once ("./componentes/nav.php");
             <div class="col-lg-4 col-md-8 col-sm-8">
                 <div class="card shadow">
                     <div class="card-title text-center border-bottom">
-                        <img src="../img/img_login.jpg" alt="Imagen Login">
+                        <img src="./img/img_login.jpg" alt="Imagen Login">
                         <h2 class="p-3">Login</h2>
                     </div>
                     <div class="card-body">
@@ -85,7 +76,17 @@ require_once ("./componentes/nav.php");
                                 <label for="contrasena" class="form-label">Contraseña</label>
                                 <input type="password" class="form-control" maxlength="15" required id="contrasena"
                                     name="contrasena" placeholder="123">
-                            </div>                            
+                            </div>       
+                            <?php
+                                        if ($usuarioNoValido)   {
+                                    ?>
+                                        <div class="alert alert-danger" role="alert">
+                                            
+                                        El usuario y/o contraseña no es válido, intente nuevamente.
+                                        </div>
+                                    <?php
+                                        }
+                                    ?>                     
                             <div class="d-grid gap-2 col-6 mx-auto">
                                 <button class="btn btn-primary" type="submit">Ingresar</button>
                             </div>

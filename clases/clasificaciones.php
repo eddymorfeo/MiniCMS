@@ -1,6 +1,6 @@
 <?php
 
-require_once("conexion.php");
+require_once "conexion.php";
 
 class Clasificaciones {
     public $idclasificacion;
@@ -17,7 +17,22 @@ class Clasificaciones {
         return $resultado;
     }
 
+    public function setIdClasificacion($id){
+        $this->idcontenido = $id;
+        $this->obtener();
+    }
 
+
+    public function obtener(){
+        $db = new ConexionDB ();
+        $query = "SELECT nombre FROM  clasificaciones WHERE idclasificacion = ?";
+        $resultado =  $db->ejecutar_pdo($query, [$this->idcontenido]); 
+        $fila = $resultado ->fetch_assoc();
+        $this->nombre = $fila["nombre"];
+        $db->cerrar();
+    }
 }
+
+
 
 ?>

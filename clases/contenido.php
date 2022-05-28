@@ -3,9 +3,9 @@
 require_once "conexion.php";
 
 class Contenido {
-    public $idContenido;
-    public $idClasificacion;
-    public $autor_idUsuario;
+    public $idcontenido;
+    public $idclasificacion;
+    public $autor_idusuario;
     public $imagen;
     public $titulo;
     public $subtitulo;
@@ -32,39 +32,40 @@ class Contenido {
     public function agregar (){
         $db = new ConexionDB ();
         $query = "INSERT INTO contenidos VALUES (NULL, ?, ?, ?, ?, ?, ?)";
-        $parametros = [$this->idClasificacion, $this->autor_idUsuario, $this->imagen, $this->titulo, $this->subtitulo, $this->contenido];
+        $parametros = [$this->idclasificacion, $this->autor_idusuario, $this->imagen, $this->titulo, $this->subtitulo, $this->contenido];
         $db->ejecutar_pdo($query, $parametros); 
         $db->cerrar(); 
     }
     public function modificar (){
         $db = new ConexionDB ();
-        $query = "UPDATE contenidos SET idclasificacion = ?, autor_idusuario = ?, imagen = ?, titulo = ?, subtitulo = ?, contenido = ? WHERE idContenido = ?";
-        $parametros = [$this->idClasificacion, $this->autor_idUsuario, $this->imagen, $this->titulo, $this->subtitulo, $this->contenido, $this->idContenido];
+        $query = "UPDATE contenidos SET idclasificacion = ?, autor_idusuario = ?, imagen = ?, titulo = ?, subtitulo = ?, contenido = ? WHERE idcontenido = ?";
+        $parametros = [$this->idclasificacion, $this->autor_idusuario, $this->imagen, $this->titulo, $this->subtitulo, $this->contenido, $this->idcontenido];
         $db->ejecutar_pdo($query, $parametros); 
         $db->cerrar(); 
     }
 
     public function setIdContenido($id){
-        $this->idContenido = $id;
+        $this->idcontenido = $id;
         $this->obtener();
     }
+
 
 
     public function obtener(){
         $db = new ConexionDB ();
         $query = "SELECT * FROM contenidos WHERE idcontenido = ?";
-        $resultado =  $db->ejecutar_pdo($query, [$this->idContenido]); 
+        $resultado =  $db->ejecutar_pdo($query, [$this->idcontenido]); 
         if ($resultado->num_rows > 0){
             $fila = $resultado ->fetch_assoc();
-            $this->idClasificacion = $fila["idclasificacion"];
-            $this->autor_idUsuario = $fila["autor_idusuario"];
+            $this->idclasificacion = $fila["idclasificacion"];
+            $this->autor_idusuario = $fila["autor_idusuario"];
             $this->imagen = $fila["imagen"];
             $this->titulo = $fila["titulo"];
             $this->subtitulo = $fila["subtitulo"];
             $this->contenido = $fila["contenido"];
         } else{
-            $this->idClasificacion = null;
-            $this->autor_idUsuario = null;
+            $this->idclasificacion = null;
+            $this->autor_idusuario = null;
             $this->imagen = null;
             $this->titulo = null;
             $this->subtitulo = null;

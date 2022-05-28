@@ -8,8 +8,8 @@ require "./componentes/carousel.php";
 
 <div class="row justify-content-center mt-5 mb-5">
     <div class="col-lg-8 col-md-8 col-sm-8">
-        <h1>Quienes Somos</h1>
-        <p>
+        <h1 class="fw-bold">Quienes Somos</h1>
+        <p class="fst-italic">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque pellentesque posuere cursus. Pellentesque
             aliquam scelerisque tortor, et finibus quam accumsan vel. Ut ullamcorper tincidunt odio non euismod.
             Praesent dapibus ante eget imperdiet ullamcorper. Donec efficitur libero ut lectus facilisis lacinia. Duis

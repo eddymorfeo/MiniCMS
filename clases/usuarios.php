@@ -12,11 +12,18 @@ class Usuario {
     public function __construct()   {
     }
 
-    public function listar()    {
+    public function setIdusuario($id){
+        $this->idusuario = $id;
+        $this->listar();
+    }
+
+    public function listar(){
         $db = new conexionDB();
-        $sql = "SELECT idusuario id, concat_ws(' ', nombre, apellido) nombre FROM usuarios";
-        $resultado = $db->ejecutar_pdo($sql, array());
-        return $resultado;
+        $sql = "SELECT concat_ws(' ', nombre, apellido) nombre FROM usuarios WHERE idusuario = ?";
+        $resultado = $db->ejecutar_pdo($sql, [$this->idusuario]);
+        $fila = $resultado ->fetch_assoc();
+        $this->nombre = $fila["nombre"];
+        $db->cerrar();
     }
 
     public function autenticar($email, $contrasena)    {
